@@ -7,7 +7,10 @@ import datetime
 from django.test import TestCase
 from django.conf import settings
 from django.core import mail
-from django.core.urlresolvers import reverse
+try:
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
 from django.core.exceptions import ImproperlyConfigured
 from registration.compat import get_user_model
 from registration import forms

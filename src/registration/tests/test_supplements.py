@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import django
+
 """
 """
 __author__ = 'Alisue <lambdalisue@hashnote.net>'
 from django.test import TestCase
 from django.core import mail
-from django.core.urlresolvers import reverse
+try:
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
 from django.core.exceptions import ImproperlyConfigured
 
 from registration import forms
@@ -73,8 +79,12 @@ class RegistrationViewWithDefaultRegistrationSupplementTestCase(TestCase):
                                           'email1': 'alice@example.com',
                                           'email2': 'alice@example.com',
                                           'remarks': 'Hello'})
-        self.assertRedirects(response,
-                             'http://testserver%s' % reverse('registration_complete'))
+
+        expected_redirect = reverse('registration_complete')
+        if django.VERSION < (2, 0):
+            expected_redirect = 'http://testserver%s' % expected_redirect
+
+        self.assertRedirects(response, expected_redirect)
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(DefaultRegistrationSupplement.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)

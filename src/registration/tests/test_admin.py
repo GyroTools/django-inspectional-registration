@@ -5,9 +5,11 @@ from __future__ import unicode_literals
 __author__ = 'Alisue <lambdalisue@hashnote.net>'
 from django.test import TestCase
 from django.contrib import admin
-from django.core.urlresolvers import reverse
+try:
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
 from django.core import mail
-from django.core import urlresolvers
 from registration.compat import get_user_model
 from registration.backends.default import DefaultRegistrationBackend
 from registration.models import RegistrationProfile
@@ -37,7 +39,7 @@ class RegistrationAdminTestCase(TestCase):
         self.admin_url = reverse('admin:index')
 
     def test_change_list_view_get(self):
-        url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -49,7 +51,7 @@ class RegistrationAdminTestCase(TestCase):
             username='bob', email='bob@example.com',
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -63,7 +65,7 @@ class RegistrationAdminTestCase(TestCase):
             username='bob', email='bob@example.com',
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(100,))
+        url = reverse('admin:registration_registrationprofile_change', args=(100,))
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 404)
@@ -73,8 +75,8 @@ class RegistrationAdminTestCase(TestCase):
             username='bob', email='bob@example.com',
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
-        redirect_url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
+        redirect_url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -96,8 +98,8 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
         previous_activation_key = new_user.registration_profile.activation_key
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
-        redirect_url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
+        redirect_url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -120,8 +122,8 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
-        redirect_url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
+        redirect_url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -140,8 +142,8 @@ class RegistrationAdminTestCase(TestCase):
             username='bob', email='bob@example.com',
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
-        redirect_url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
+        redirect_url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -163,7 +165,7 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -193,7 +195,7 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -220,7 +222,7 @@ class RegistrationAdminTestCase(TestCase):
             username='bob', email='bob@example.com',
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -250,8 +252,8 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
-        redirect_url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
+        redirect_url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -273,7 +275,7 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -300,8 +302,8 @@ class RegistrationAdminTestCase(TestCase):
             username='bob', email='bob@example.com',
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
-        redirect_url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
+        redirect_url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -323,7 +325,7 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,
@@ -353,8 +355,8 @@ class RegistrationAdminTestCase(TestCase):
             new_user.registration_profile,
             request=self.mock_request)
 
-        url = urlresolvers.reverse('admin:registration_registrationprofile_change', args=(1,))
-        redirect_url = urlresolvers.reverse('admin:registration_registrationprofile_changelist')
+        url = reverse('admin:registration_registrationprofile_change', args=(1,))
+        redirect_url = reverse('admin:registration_registrationprofile_changelist')
         response = self.client.post(url, {
             '_supplement-TOTAL_FORMS': 0,
             '_supplement-INITIAL_FORMS': 0,

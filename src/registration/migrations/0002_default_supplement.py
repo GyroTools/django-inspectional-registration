@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             migrations.AddField(
                 model_name='defaultregistrationsupplement',
                 name='registration_profile',
-                field=models.OneToOneField(editable=False, related_name='_registration_defaultregistrationsupplement_supplement', verbose_name='registration profile', to='registration.RegistrationProfile'),
+                field=models.OneToOneField(editable=False, related_name='_registration_defaultregistrationsupplement_supplement', verbose_name='registration profile', to='registration.RegistrationProfile', on_delete=models.CASCADE),
                 preserve_default=True,
             ),
         ]

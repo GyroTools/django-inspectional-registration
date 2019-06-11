@@ -62,14 +62,24 @@ MEDIA_URL = ''
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'rbs62_^fuahxz!4k1!&yj$h8a=&-h_%do+3jk&%#v=o2%ep=7@'
 
+import django
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-)
+if django.VERSION >= (2, 0):
+    MIDDLEWARE = (
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+    )
+else:
+    MIDDLEWARE_CLASSES = (
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+    )
 
 ROOT_URLCONF = 'tests.urls'
 
@@ -92,8 +102,6 @@ REGISTRATION_SUPPLEMENT_CLASS = (
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-import django
-
 if django.VERSION <= (1, 3):
     # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
     # trailing slash.
@@ -113,6 +121,7 @@ if django.VERSION >= (1, 10):
             'OPTIONS': {
                 'context_processors': [
                     'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages'
                 ],
                 'loaders': [
                     'django.template.loaders.filesystem.Loader',

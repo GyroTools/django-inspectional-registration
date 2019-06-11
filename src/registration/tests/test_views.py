@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import django
+
 """
 """
 __author__ = 'Alisue <lambdalisue@hashnote.net>'
@@ -7,7 +10,10 @@ import datetime
 from django.test import TestCase
 from django.conf import settings
 from django.core import mail
-from django.core.urlresolvers import reverse
+try:
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
 
 from registration.compat import get_user_model
 from registration import forms
@@ -55,8 +61,12 @@ class RegistrationViewTestCase(TestCase):
                                     data={'username': 'alice',
                                           'email1': 'alice@example.com',
                                           'email2': 'alice@example.com'})
-        self.assertRedirects(response,
-                             'http://testserver%s' % reverse('registration_complete'))
+
+        expected_redirect = reverse('registration_complete')
+        if django.VERSION < (2, 0):
+            expected_redirect = 'http://testserver%s' % expected_redirect
+
+        self.assertRedirects(response, expected_redirect)
         self.assertEqual(RegistrationProfile.objects.count(), 1)
         self.assertEqual(len(mail.outbox), 1)
 
@@ -105,7 +115,9 @@ class RegistrationViewTestCase(TestCase):
         """
         settings.REGISTRATION_OPEN = False
 
-        closed_redirect = 'http://testserver%s' % reverse('registration_disallowed')
+        closed_redirect = reverse('registration_disallowed')
+        if django.VERSION < (2, 0):
+            closed_redirect = 'http://testserver%s' % closed_redirect
 
         response = self.client.get(reverse('registration_register'))
         self.assertRedirects(response, closed_redirect)
@@ -169,7 +181,9 @@ class RegistrationViewTestCase(TestCase):
             'password1': 'swordfish',
             'password2': 'swordfish'})
 
-        success_redirect = 'http://testserver%s' % reverse('registration_activation_complete')
+        success_redirect = reverse('registration_activation_complete')
+        if django.VERSION < (2, 0):
+            success_redirect = 'http://testserver%s' % success_redirect
         self.assertRedirects(response, success_redirect)
         # RegistrationProfile should be removed with activation
         self.assertEqual(RegistrationProfile.objects.count(), 0)
