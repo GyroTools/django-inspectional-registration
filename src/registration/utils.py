@@ -7,7 +7,7 @@ __author__ = 'Alisue <lambdalisue@hashnote.net>'
 import random
 
 from django.utils.encoding import force_text
-from django.utils.six.moves import range
+from six.moves import range
 from registration.compat import sha1
 
 

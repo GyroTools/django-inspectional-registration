@@ -59,7 +59,7 @@ try:
     from django.utils.text import ugettext_lazy as _
 except:
     from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 
 from registration.conf import settings
 from registration.compat import get_user_model
