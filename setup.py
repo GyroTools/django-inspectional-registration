@@ -109,10 +109,10 @@ def readlist(filename):
 # let it use the custom fixers from the custom_fixers
 # package.
 extra = {}
-if sys.version_info >= (3, 0):
-    extra.update(
-        use_2to3=True,
-    )
+# if sys.version_info >= (3, 0):
+#     extra.update(
+#         use_2to3=True,
+#     )
 
 setup(
     name=NAME,
@@ -120,7 +120,7 @@ setup(
     description=("Django registration app which required inspection step "
                  "before activation"),
     long_description = read('README.rst'),
-    classifiers = (
+    classifiers = [
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -139,7 +139,7 @@ setup(
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'Topic :: Software Development :: Libraries :: Python Modules',
-    ),
+    ],
     keywords = "django app registration inspection",
     author = 'Alisue',
     author_email = 'lambdalisue@hashnote.net',
