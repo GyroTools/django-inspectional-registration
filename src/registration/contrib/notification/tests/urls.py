@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from registration.compat import url
-from registration.compat import patterns
-from registration.compat import include
 
 from django.contrib import admin
+from django.urls import re_path
+
+from registration.compat import include
+from registration.compat import patterns
+
 admin.autodiscover()
 
 # default template used in template
 # require admin site
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
+    re_path(r'^admin/', include(admin.site.urls)),
 )

@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
     PasswordResetConfirmView, PasswordResetCompleteView, PasswordResetDoneView
+from django.urls import re_path
 
 """
 URLconf for django-inspectional-registration
 """
 __author__ = 'Alisue <lambdalisue@hashnote.net>'
-from registration.compat import url
 
 from registration.views import RegistrationView
 from registration.views import RegistrationClosedView
@@ -17,15 +17,15 @@ from registration.views import ActivationView
 from registration.views import ActivationCompleteView
 
 urlpatterns = [
-    url(r'^activate/complete/$', ActivationCompleteView.as_view(),
+    re_path(r'^activate/complete/$', ActivationCompleteView.as_view(),
         name='registration_activation_complete'),
-    url(r'^activate/(?P<activation_key>\w+)/$', ActivationView.as_view(),
+    re_path(r'^activate/(?P<activation_key>\w+)/$', ActivationView.as_view(),
         name='registration_activate'),
-    url(r'^register/$', RegistrationView.as_view(),
+    re_path(r'^register/$', RegistrationView.as_view(),
         name='registration_register'),
-    url(r'^register/closed/$', RegistrationClosedView.as_view(),
+    re_path(r'^register/closed/$', RegistrationClosedView.as_view(),
         name='registration_disallowed'),
-    url(r'^register/complete/$', RegistrationCompleteView.as_view(),
+    re_path(r'^register/complete/$', RegistrationCompleteView.as_view(),
         name='registration_complete'),
 ]
 
@@ -51,25 +51,25 @@ if settings.REGISTRATION_DJANGO_AUTH_URLS_ENABLE:
         )
 
     urlpatterns += [
-        url(r'^login/$', auth.login,
+        re_path(r'^login/$', auth.login,
             {'template_name': 'registration/login.html'},
             name=prefix+'login'+suffix),
-        url(r'^logout/$', auth.logout,
+        re_path(r'^logout/$', auth.logout,
             {'template_name': 'registration/logout.html'},
             name=prefix+'logout'+suffix),
-        url(r'^password/change/$', PasswordChangeView.as_view(),
+        re_path(r'^password/change/$', PasswordChangeView.as_view(),
             name=prefix+'password_change'+suffix),
-        url(r'^password/change/done/$', PasswordChangeDoneView.as_view(),
+        re_path(r'^password/change/done/$', PasswordChangeDoneView.as_view(),
             name=prefix+'password_change_done'+suffix),
-        url(r'^password/reset/$', PasswordResetView.as_view(),
+        re_path(r'^password/reset/$', PasswordResetView.as_view(),
             name=prefix+'password_reset'+suffix, kwargs=dict(
                 post_reset_redirect=prefix+'password_reset_done'+suffix)),
-        url(password_reset_confirm_rule,
+        re_path(password_reset_confirm_rule,
             PasswordResetConfirmView.as_view(),
             name=prefix+'password_reset_confirm'+suffix),
-        url(r'^password/reset/complete/$', PasswordResetCompleteView.as_view(),
+        re_path(r'^password/reset/complete/$', PasswordResetCompleteView.as_view(),
             name=prefix+'password_reset_complete'+suffix),
-        url(r'^password/reset/done/$', PasswordResetDoneView.as_view(),
+        re_path(r'^password/reset/done/$', PasswordResetDoneView.as_view(),
             name=prefix+'password_reset_done'+suffix),
     ]
 

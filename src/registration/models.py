@@ -56,9 +56,9 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.core.exceptions import ObjectDoesNotExist
 try:
-    from django.utils.text import ugettext_lazy as _
+    from django.utils.text import gettext_lazy as _
 except:
-    from django.utils.translation import ugettext_lazy as _
+    from django.utils.translation import gettext_lazy as _
 from six import python_2_unicode_compatible
 
 from registration.conf import settings
