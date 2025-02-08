@@ -16,7 +16,7 @@ except ImportError:
 
 if django.VERSION >= (1, 9):
     patterns = lambda x, *args: args
-    from django.conf.urls import url
+    from django.urls import re_path
     from django.conf.urls import include
 else:
     try:

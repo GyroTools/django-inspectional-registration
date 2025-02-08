@@ -6,7 +6,7 @@ Utilities for django-inspectional-registration
 __author__ = 'Alisue <lambdalisue@hashnote.net>'
 import random
 
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from six.moves import range
 from registration.compat import sha1
 
@@ -32,8 +32,8 @@ def generate_activation_key(username):
 
     .. _django-registration: https://bitbucket.org/ubernostrum/django-registration
     """
-    username = force_text(username)
-    seed = force_text(random.random())
+    username = force_str(username)
+    seed = force_str(random.random())
     salt = sha1(seed.encode('utf-8')).hexdigest()[:5]
     activation_key = sha1((salt+username).encode('utf-8')).hexdigest()
     return activation_key

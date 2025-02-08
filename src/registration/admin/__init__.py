@@ -59,7 +59,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils.safestring import mark_safe
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from registration.conf import settings
 from registration.backends import get_backend
@@ -316,7 +316,7 @@ class RegistrationAdmin(admin.ModelAdmin):
 
         """
         if obj.supplement:
-            return force_text(obj.supplement)
+            return force_str(obj.supplement)
         return _('Not available')
     display_supplement_summary.short_description = _(
         'A summary of supplemental information'
